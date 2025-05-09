@@ -7,6 +7,7 @@ import Html from "./pages/Html";
 import Css from "./pages/Css";
 import Javascript from "./pages/Javascript";
 import Accessibility from "./pages/Accessibility";
+import ScorePage from "./pages/ScorePage";
 import PageNotFound from "./pages/PageNotFound";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="css" element={<Css />} />
             <Route path="javascript" element={<Javascript />} />
             <Route path="accessibility" element={<Accessibility />} />
+            <Route path="score" element={<ScorePage />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />

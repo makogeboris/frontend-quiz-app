@@ -1,11 +1,24 @@
-import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
+import ThemeToggle from "../components/ThemeToggle";
 import htmlIcon from "../assets/icon-html.svg";
 import cssIcon from "../assets/icon-css.svg";
 import jsIcon from "../assets/icon-js.svg";
 import a11yIcon from "../assets/icon-accessibility.svg";
 
 const StyledHomepage = styled.div`
+  padding-block: 1.625rem 12.9375rem;
+
+  @media (min-width: 37.5rem) {
+    padding-block: 3.375rem 14.0625rem;
+  }
+
+  @media (min-width: 64rem) {
+    padding-block: 6.0625rem 17rem;
+  }
+`;
+
+const MainContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -160,64 +173,74 @@ const StyledNavLink = styled(NavLink)`
 function Homepage() {
   return (
     <StyledHomepage>
-      <TitleContainer>
-        <Subtitle>
-          Welcome to the <Title>Frontend Quiz!</Title>
-        </Subtitle>
-        <Description>Pick a subject to get started.</Description>
-      </TitleContainer>
+      <ThemeToggle />
 
-      <SubjectList>
-        <li>
-          <StyledNavLink to="/html">
-            <SubjectItem>
-              <IconContainer
-                style={{ backgroundColor: "var(--icon-bg-orange)" }}
-              >
-                <Icon src={htmlIcon} alt="html" />
-              </IconContainer>
-              Html
-            </SubjectItem>
-          </StyledNavLink>
-        </li>
+      <MainContent>
+        <TitleContainer>
+          <Subtitle>
+            Welcome to the <Title>Frontend Quiz!</Title>
+          </Subtitle>
+          <Description>Pick a subject to get started.</Description>
+        </TitleContainer>
 
-        <li>
-          <StyledNavLink to="/css">
-            <SubjectItem>
-              <IconContainer
-                style={{ backgroundColor: "var(--icon-bg-green)" }}
-              >
-                <Icon src={cssIcon} alt="css" />
-              </IconContainer>
-              Css
-            </SubjectItem>
-          </StyledNavLink>
-        </li>
+        <SubjectList>
+          <li>
+            <StyledNavLink to="/html">
+              <SubjectItem>
+                <IconContainer
+                  style={{ backgroundColor: "var(--icon-bg-orange)" }}
+                >
+                  <Icon src={htmlIcon} alt="html" />
+                </IconContainer>
+                Html
+              </SubjectItem>
+            </StyledNavLink>
+          </li>
 
-        <li>
-          <StyledNavLink to="/javascript">
-            <SubjectItem>
-              <IconContainer style={{ backgroundColor: "var(--icon-bg-blue)" }}>
-                <Icon src={jsIcon} alt="js" />
-              </IconContainer>
-              Javascript
-            </SubjectItem>
-          </StyledNavLink>
-        </li>
+          <li>
+            <StyledNavLink to="/css">
+              <SubjectItem>
+                <IconContainer
+                  style={{ backgroundColor: "var(--icon-bg-green)" }}
+                >
+                  <Icon src={cssIcon} alt="css" />
+                </IconContainer>
+                Css
+              </SubjectItem>
+            </StyledNavLink>
+          </li>
 
-        <li>
-          <StyledNavLink to="/accessibility">
-            <SubjectItem>
-              <IconContainer
-                style={{ backgroundColor: "var(--icon-bg-purple)" }}
-              >
-                <Icon src={a11yIcon} alt="a11y" />
-              </IconContainer>
-              Accessibility
-            </SubjectItem>
-          </StyledNavLink>
-        </li>
-      </SubjectList>
+          <li>
+            <StyledNavLink to="/javascript">
+              <SubjectItem>
+                <IconContainer
+                  style={{ backgroundColor: "var(--icon-bg-blue)" }}
+                >
+                  <Icon src={jsIcon} alt="js" />
+                </IconContainer>
+                Javascript
+              </SubjectItem>
+            </StyledNavLink>
+          </li>
+
+          <li>
+            <StyledNavLink to="/accessibility">
+              <SubjectItem>
+                <IconContainer
+                  style={{ backgroundColor: "var(--icon-bg-purple)" }}
+                >
+                  <Icon src={a11yIcon} alt="a11y" />
+                </IconContainer>
+                Accessibility
+              </SubjectItem>
+            </StyledNavLink>
+          </li>
+
+          <li>
+            <StyledNavLink to="/score">Scorepage</StyledNavLink>
+          </li>
+        </SubjectList>
+      </MainContent>
     </StyledHomepage>
   );
 }

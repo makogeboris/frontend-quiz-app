@@ -104,14 +104,10 @@ const GlobalStyles = createGlobalStyle`
   --fs-xxs: 14px;
 
   /* font-weights */
-  --fw-light: 300; /* Light */
-  --fw-regular: 400; /* Normal */
-  --fw-medium: 500; /* Medium */
-  --fw-semibold: 600; /* Semi Bold */
-  --fw-bold: 700; /* Bold */
-  --fw-extrabold: 800; /* Extra Bold */
-  --fw-black: 900; /* Ultra Bold / Black */
-
+  --fw-light: 300; 
+  --fw-regular: 400; 
+  --fw-medium: 500; 
+ 
   /* line-heights */
   --lh-tightest: 1; 
   --lh-tight: 1.2; 
@@ -137,18 +133,24 @@ const GlobalStyles = createGlobalStyle`
     background-size: cover;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 37.5rem) {
     body {
       background-image: var(--bg-tablet);
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 64rem) {
     body {
       background-image: var(--bg-desktop);
     }
   }
 }
+
+:focus-visible {
+  outline: 3px solid var(--accent-purple);
+  outline-offset: 3px;
+}
+
 
 /* RESET */
 
@@ -280,17 +282,6 @@ textarea:not([rows]) {
 button {
   cursor: pointer;
 }
-
-:focus-visible {
-  outline: 3px solid var(--accent-purple);
-  outline-offset: 3px;
-}
-
-/* Specific focus styles for NavLinks in your quiz app */
-.quiz-nav-link:focus-visible .subject-item {
-  box-shadow: 0 0 0 2px var(--accent-purple);
-}
-
 
 `;
 
