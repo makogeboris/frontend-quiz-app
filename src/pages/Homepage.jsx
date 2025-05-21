@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import ThemeToggle from "../components/ThemeToggle";
+import Header from "../components/Header";
 import htmlIcon from "../assets/icon-html.svg";
 import cssIcon from "../assets/icon-css.svg";
 import jsIcon from "../assets/icon-js.svg";
@@ -8,33 +8,39 @@ import a11yIcon from "../assets/icon-accessibility.svg";
 
 const StyledHomepage = styled.div`
   padding-block: 1.625rem 12.9375rem;
+  padding-inline: var(--space-md);
+  max-width: 74.8125rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.625rem;
 
   @media (min-width: 37.5rem) {
     padding-block: 3.375rem 14.0625rem;
+    padding-inline: var(--space-xl);
+    gap: var(--space-2xl);
   }
 
   @media (min-width: 64rem) {
     padding-block: 6.0625rem 17rem;
+    gap: 6.1875rem;
   }
 `;
 
-const MainContent = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-xl);
-  margin-block-start: 3.625rem;
 
   @media (min-width: 37.5rem) {
     gap: var(--space-3xl);
-    margin-block-start: var(--space-2xl);
   }
 
   @media (min-width: 64rem) {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    margin-block-start: 6.1875rem;
   }
 `;
 
@@ -146,22 +152,20 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   text-transform: uppercase;
   border-radius: var(--space-xs);
+  border: 3px solid transparent;
   width: 100%;
   display: block;
-  transition: outline-width 0.3s ease, outline-offset 0.3s ease;
-  outline-color: var(--accent-purple);
-  outline-style: solid;
-
-  &:not(:focus-visible) {
-    box-shadow: none;
-    outline-width: 0;
-    outline-offset: 0;
-  }
+  transition: 0.3s;
 
   &:hover {
     box-shadow: var(--sub-shadow);
-    outline-width: 3px;
-    outline-offset: 3px;
+    border: 3px solid var(--accent-purple);
+    transform: translateX(0.5rem);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-purple);
+    outline-offset: -3px;
   }
 
   @media (min-width: 37.5rem) {
@@ -173,9 +177,9 @@ const StyledNavLink = styled(NavLink)`
 function Homepage() {
   return (
     <StyledHomepage>
-      <ThemeToggle />
+      <Header />
 
-      <MainContent>
+      <Main>
         <TitleContainer>
           <Subtitle>
             Welcome to the <Title>Frontend Quiz!</Title>
@@ -240,7 +244,7 @@ function Homepage() {
             <StyledNavLink to="/score">Scorepage</StyledNavLink>
           </li>
         </SubjectList>
-      </MainContent>
+      </Main>
     </StyledHomepage>
   );
 }

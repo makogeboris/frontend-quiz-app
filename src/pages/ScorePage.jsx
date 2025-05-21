@@ -8,9 +8,13 @@ const StyledScorePage = styled.div`
   flex-direction: column;
   gap: var(--space-2xl);
   padding-block: var(--space-sm) 14.125rem;
+  padding-inline: var(--space-md);
+  max-width: 74.8125rem;
+  margin: 0 auto;
 
   @media (min-width: 37.5rem) {
     padding-block: var(--space-xl) 10.4375rem;
+    padding-inline: var(--space-xl);
   }
 
   @media (min-width: 64rem) {
@@ -19,7 +23,7 @@ const StyledScorePage = styled.div`
   }
 `;
 
-const Header = styled.div`
+const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -70,7 +74,7 @@ const Title = styled.p`
   }
 `;
 
-const MainContent = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -162,6 +166,16 @@ const Button = styled(NavLink)`
   text-align: center;
   text-decoration: none;
   color: var(--color-white);
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-purple);
+    outline-offset: 2px;
+  }
 
   @media (min-width: 37.5rem) {
     border-radius: var(--space-md);
@@ -216,7 +230,7 @@ function ScorePage() {
         <ThemeToggle />
       </Header>
 
-      <MainContent>
+      <Main>
         <ScoreContainer>
           <QuizStatus>
             Quiz completed <QuizText>You scored...</QuizText>
@@ -241,7 +255,7 @@ function ScorePage() {
 
           <Button to="/">Play Again</Button>
         </ResultContainer>
-      </MainContent>
+      </Main>
     </StyledScorePage>
   );
 }

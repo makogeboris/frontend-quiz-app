@@ -146,11 +146,6 @@ const GlobalStyles = createGlobalStyle`
   }
 }
 
-:focus-visible {
-  outline: 3px solid var(--accent-purple);
-  outline-offset: 3px;
-}
-
 
 /* RESET */
 

@@ -1,15 +1,20 @@
 import styled from "styled-components";
 import ThemeToggle from "../components/ThemeToggle";
 import a11yIcon from "../assets/icon-accessibility.svg";
+import Button from "../components/Button";
 
 const StyledAccessibility = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--space-2xl);
   padding-block: var(--space-sm) 5.4375rem;
+  padding-inline: var(--space-md);
+  max-width: 74.8125rem;
+  margin: 0 auto;
 
   @media (min-width: 37.5rem) {
     padding-block: var(--space-xl) 3.25rem;
+    padding-inline: var(--space-xl);
   }
 
   @media (min-width: 64rem) {
@@ -18,7 +23,7 @@ const StyledAccessibility = styled.div`
   }
 `;
 
-const Header = styled.div`
+const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -69,7 +74,7 @@ const Title = styled.h1`
   }
 `;
 
-const MainContent = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,7 +183,7 @@ const Form = styled.form`
 `;
 
 const AnswerList = styled.ul`
-  padding-left: 0;
+  padding-inline-start: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -199,12 +204,11 @@ const StyledLabel = styled.label`
   background-color: var(--bg-sub);
   padding: var(--space-sm);
   gap: var(--space-sm);
-  box-shadow: var(--sub-shadow);
   border-radius: var(--space-xs);
   width: 100%;
   cursor: pointer;
   border: 3px solid transparent;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: 0.3s;
 
   &:has(input:checked) {
     border-color: var(--accent-purple);
@@ -212,7 +216,13 @@ const StyledLabel = styled.label`
 
   &:has(input:focus-visible) {
     outline: 3px solid var(--accent-purple);
-    outline-offset: 3px;
+    outline-offset: -3px;
+  }
+
+  &:hover {
+    box-shadow: var(--sub-shadow);
+    border: 3px solid var(--accent-purple);
+    transform: translateX(0.5rem);
   }
 
   @media (min-width: 37.5rem) {
@@ -272,24 +282,6 @@ const AnswerText = styled.h3`
   }
 `;
 
-const Button = styled.button`
-  background-color: var(--accent-purple);
-  border: transparent;
-  padding: 1.1875rem;
-  border-radius: var(--space-xs);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-medium);
-  line-height: var(--lh-tightest);
-  color: var(--color-white);
-
-  @media (min-width: 37.5rem) {
-    border-radius: var(--space-md);
-    padding: var(--space-lg);
-    margin-top: var(--space-xxs);
-    font-size: var(--fs-lg);
-  }
-`;
-
 function Accessibility() {
   return (
     <StyledAccessibility>
@@ -305,7 +297,7 @@ function Accessibility() {
         <ThemeToggle />
       </Header>
 
-      <MainContent>
+      <Main>
         <QuestionContainer>
           <QuestionTextContainer>
             <QuestionNumber>Question 6 of 10</QuestionNumber>
@@ -316,7 +308,7 @@ function Accessibility() {
             </QuestionText>
           </QuestionTextContainer>
 
-          <Progress value={60} max={100}></Progress>
+          <Progress value={6} max={10}></Progress>
         </QuestionContainer>
 
         <Form>
@@ -364,7 +356,7 @@ function Accessibility() {
             <Button type="submit">Submit Answer</Button>
           </AnswerList>
         </Form>
-      </MainContent>
+      </Main>
     </StyledAccessibility>
   );
 }

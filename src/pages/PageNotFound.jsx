@@ -1,21 +1,21 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import ThemeToggle from "../components/ThemeToggle";
+import Header from "../components/Header";
 
 const StyledPageNotFound = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 7rem;
+  padding-block: 1.625rem;
   padding-inline: var(--space-md);
   max-width: 74.8125rem;
   margin: 0 auto;
-  padding-block: 1.625rem;
   min-height: 71vh;
 
   @media (min-width: 37.5rem) {
-    padding-inline: var(--space-xl);
     padding-block: 3.375rem;
+    padding-inline: var(--space-xl);
   }
 
   @media (min-width: 64rem) {
@@ -42,7 +42,7 @@ const Description = styled.p`
   }
 `;
 
-const MainContent = styled.div`
+const MainContent = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,9 +70,7 @@ const HomeButton = styled(NavLink)`
 function PageNotFound() {
   return (
     <StyledPageNotFound>
-      <div>
-        <ThemeToggle />
-      </div>
+      <Header />
 
       <MainContent>
         <div>
