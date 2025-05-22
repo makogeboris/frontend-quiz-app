@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  background-color: var(--accent-purple);
+  background: var(--accent-purple);
   border: 3px solid transparent;
   padding: 1.1875rem;
+  box-shadow: var(--sub-shadow);
   border-radius: var(--space-xs);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
@@ -12,12 +13,22 @@ const StyledButton = styled.button`
   transition: 0.3s;
 
   &:hover {
-    opacity: 0.8;
+    background: #8b29c7;
   }
 
   &:focus-visible {
     outline: 3px solid var(--accent-purple);
     outline-offset: 2px;
+
+    /* No answer seleted
+     background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.5)
+      ),
+      #a729f5; 
+       or #cf97f2
+      */
   }
 
   @media (min-width: 37.5rem) {

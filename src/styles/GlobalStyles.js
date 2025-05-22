@@ -17,7 +17,10 @@ const GlobalStyles = createGlobalStyle`
   --accent-red: hsl(0, 82%, 63%);
   --accent-green: hsl(151, 68%, 52%);
   --accent-purple: hsl(277, 91%, 56%);
+  --accent-blue: hsl(223, 100%, 59%);
+  --accent-orange: hsl(22, 100%, 60%);
   --color-white: hsl(0, 100%, 100%);
+  --color-black: hsl(0, 0%, 0%);
 
   /* =====================
      🔤 Letter Background
@@ -38,6 +41,7 @@ const GlobalStyles = createGlobalStyle`
     --text-letter: hsl(219, 13%, 44%);
     --icon-toggle: hsl(219, 13%, 44%);
     --sub-shadow: 0px 16px 40px rgba(143, 160, 193, 0.14);
+    --answer-label: hsl(0, 100%, 100%);
 
     --bg-mobile: url("/images/backgrounds/pattern-background-mobile-light.svg");
     --bg-tablet: url("/images/backgrounds/pattern-background-tablet-light.svg");
@@ -57,6 +61,7 @@ const GlobalStyles = createGlobalStyle`
     --text-letter: hsl(219, 13%, 44%);
     --icon-toggle: hsl(0, 100%, 100%);
     --sub-shadow: 0px 16px 40px rgba(49, 62, 81, 0.14);
+    --answer-label: hsl(215, 27%, 32%);
 
     --bg-mobile: url("/images/backgrounds/pattern-background-mobile-dark.svg");
     --bg-tablet: url("/images/backgrounds/pattern-background-tablet-dark.svg");
@@ -144,6 +149,15 @@ const GlobalStyles = createGlobalStyle`
       background-image: var(--bg-desktop);
     }
   }
+
+  label:has(input:checked) .LabelContainer {
+  background-color: var(--accent-purple);
+}
+
+  label:has(input:checked) .AnswerLabel {
+    color: var(--answer-label);
+}
+
 }
 
 
