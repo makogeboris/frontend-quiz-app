@@ -26,7 +26,7 @@ const StyledButton = styled.button`
         rgba(255, 255, 255, 0.5),
         rgba(255, 255, 255, 0.5)
       ),
-      #a729f5; 
+      #a729f5;
        or #cf97f2
       */
   }
@@ -39,8 +39,26 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ children }) {
-  return <StyledButton>{children}</StyledButton>;
+function Button({ index, answer, numQuestions, dispatch }) {
+  const isLastQuestion = index === numQuestions - 1;
+
+  function handleClick() {
+    if (answer === null) return;
+
+    if (!isLastQuestion) {
+      dispatch({ type: "nextQuestion" });
+    }
+  }
+
+  return (
+    <StyledButton onClick={handleClick}>
+      {answer === null
+        ? "Submit Answer"
+        : isLastQuestion
+        ? "Finish Quiz"
+        : "Next Question"}
+    </StyledButton>
+  );
 }
 
 export default Button;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useDarkMode } from "../context/DarkModeContext";
+import { useDarkMode } from "../contexts/DarkModeContext";
 
 /* From Uiverse.io by TimTrayler */
 const ToggleContainer = styled.div`

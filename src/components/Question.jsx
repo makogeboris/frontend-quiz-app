@@ -33,15 +33,14 @@ const QuestionText = styled.h2`
   }
 `;
 
-function Question() {
+function Question({ index, question, numQuestions }) {
   return (
     <QuestionTextContainer>
-      <QuestionNumber>Question 6 of 10</QuestionNumber>
+      <QuestionNumber>
+        Question {index + 1} of {numQuestions}
+      </QuestionNumber>
 
-      <QuestionText>
-        Which of these color contrast ratios defines the minimum WCAG 2.1 Level
-        AA requirement for normal text?
-      </QuestionText>
+      <QuestionText>{question.question}</QuestionText>
     </QuestionTextContainer>
   );
 }

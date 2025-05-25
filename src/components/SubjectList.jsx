@@ -1,9 +1,5 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import htmlIcon from "../assets/icon-html.svg";
-import cssIcon from "../assets/icon-css.svg";
-import jsIcon from "../assets/icon-js.svg";
-import a11yIcon from "../assets/icon-accessibility.svg";
 
 const StyledSubjectList = styled.ul`
   padding-left: 0;
@@ -111,7 +107,7 @@ function SubjectList() {
                 backgroundColor: "var(--icon-bg-orange)",
               }}
             >
-              <Icon src={htmlIcon} alt="html" />
+              <Icon src="/images/icon-html.svg" alt="html" />
             </IconContainer>
             Html
           </SubjectItem>
@@ -132,7 +128,7 @@ function SubjectList() {
                 backgroundColor: "var(--icon-bg-green)",
               }}
             >
-              <Icon src={cssIcon} alt="css" />
+              <Icon src="/images/icon-css.svg" alt="css" />
             </IconContainer>
             Css
           </SubjectItem>
@@ -153,7 +149,7 @@ function SubjectList() {
                 backgroundColor: "var(--icon-bg-blue)",
               }}
             >
-              <Icon src={jsIcon} alt="js" />
+              <Icon src="/images/icon-js.svg" alt="javascript" />
             </IconContainer>
             Javascript
           </SubjectItem>
@@ -174,7 +170,7 @@ function SubjectList() {
                 backgroundColor: "var(--icon-bg-purple)",
               }}
             >
-              <Icon src={a11yIcon} alt="a11y" />
+              <Icon src="/images/icon-accessibility.svg" alt="accessibility" />
             </IconContainer>
             Accessibility
           </SubjectItem>

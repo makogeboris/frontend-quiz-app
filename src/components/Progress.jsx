@@ -29,8 +29,14 @@ const StyledProgress = styled.progress`
   }
 `;
 
-function Progress() {
-  return <StyledProgress value={6} max={10}></StyledProgress>;
+function Progress({ index, numQuestions, answer }) {
+  return (
+    <StyledProgress
+      max={numQuestions}
+      value={1}
+      // value={index + Number(answer !== null)}
+    ></StyledProgress>
+  );
 }
 
 export default Progress;

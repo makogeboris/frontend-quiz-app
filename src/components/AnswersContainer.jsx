@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Button from "../components/Button";
 import errorIcon from "../assets/icon-error.svg";
 import correctIcon from "../assets/icon-correct.svg";
+import Button from "./Button";
 
 const StyledAnswersContainer = styled.form`
   display: flex;
@@ -97,6 +97,7 @@ const LabelContainer = styled.div.attrs({ className: "LabelContainer" })`
   height: var(--space-xl);
   border-radius: 0.375rem;
   background-color: var(--letter-bg);
+  flex-shrink: 0;
 
   @media (min-width: 37.5rem) {
     width: 3.5rem;
@@ -168,7 +169,7 @@ const ErrorText = styled.p`
   }
 `;
 
-function AnswersContainer() {
+function AnswersContainer({ index, question, dispatch, answer, numQuestions }) {
   const [showError, setShowError] = useState(false);
 
   function handleShowError(e) {
@@ -179,65 +180,35 @@ function AnswersContainer() {
   return (
     <StyledAnswersContainer>
       <AnswerList>
-        <li>
-          <StyledLabel>
-            <Wrapper>
-              <RadioInput name="quiz" value="A" />
-              <LabelContainer>
-                <AnswerLabel>A</AnswerLabel>
-              </LabelContainer>
-              <AnswerText>4.5:1</AnswerText>
-            </Wrapper>
+        {question.options.map((option, index) => {
+          const label = String.fromCharCode(65 + index);
 
-            <AnswerIcon src={correctIcon} />
-          </StyledLabel>
-        </li>
+          return (
+            <li key={index}>
+              <StyledLabel
+                onClick={() => dispatch({ type: "newAnswer", payload: index })}
+              >
+                <Wrapper>
+                  <RadioInput name="quiz" value={label} />
+                  <LabelContainer>
+                    <AnswerLabel>{label}</AnswerLabel>
+                  </LabelContainer>
+                  <AnswerText>{option}</AnswerText>
+                </Wrapper>
 
-        <li>
-          <StyledLabel>
-            <Wrapper>
-              <RadioInput type="radio" name="quiz" value="B" />
-              <LabelContainer>
-                <AnswerLabel>B</AnswerLabel>
-              </LabelContainer>
-              <AnswerText>3:1</AnswerText>
-            </Wrapper>
+                <AnswerIcon src={correctIcon} />
+              </StyledLabel>
+            </li>
+          );
+        })}
 
-            <AnswerIcon src={correctIcon} />
-          </StyledLabel>
-        </li>
-
-        <li>
-          <StyledLabel>
-            <Wrapper>
-              <RadioInput type="radio" name="quiz" value="C" />
-              <LabelContainer>
-                <AnswerLabel>C</AnswerLabel>
-              </LabelContainer>
-              <AnswerText>2.5:1</AnswerText>
-            </Wrapper>
-
-            <AnswerIcon src={correctIcon} />
-          </StyledLabel>
-        </li>
-
-        <li>
-          <StyledLabel>
-            <Wrapper>
-              <RadioInput type="radio" name="quiz" value="D" />
-              <LabelContainer>
-                <AnswerLabel>D</AnswerLabel>
-              </LabelContainer>
-              <AnswerText>5:1</AnswerText>
-            </Wrapper>
-
-            <AnswerIcon src={correctIcon} />
-          </StyledLabel>
-        </li>
-
-        <Button type="submit" onClick={handleShowError}>
-          Submit Answer
-        </Button>
+        <Button
+          index={index}
+          question={question}
+          answer={answer}
+          dispatch={dispatch}
+          numQuestions={numQuestions}
+        />
       </AnswerList>
 
       {showError && (

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import a11yIcon from "../assets/icon-accessibility.svg";
 
 const TitleContainer = styled.div`
   display: flex;
@@ -46,14 +45,14 @@ const Subject = styled.h1`
   }
 `;
 
-function Title() {
+function Title({ title, icon }) {
   return (
     <TitleContainer>
       <IconContainer>
-        <Icon src={a11yIcon} alt="a11y" />
+        <Icon src={icon} alt={`${title} icon`} />
       </IconContainer>
 
-      <Subject>Accessibility</Subject>
+      <Subject>{title}</Subject>
     </TitleContainer>
   );
 }

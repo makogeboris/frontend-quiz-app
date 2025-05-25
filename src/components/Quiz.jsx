@@ -4,8 +4,9 @@ import Progress from "../components/Progress";
 import Question from "../components/Question";
 import Title from "../components/Title";
 import AnswersContainer from "../components/AnswersContainer";
+import { useQuiz } from "../contexts/QuizContext";
 
-const StyledAccessibility = styled.div`
+const StyledQuiz = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--space-2xl);
@@ -65,23 +66,37 @@ const QuestionContainer = styled.div`
   }
 `;
 
-function Accessibility() {
+function Quiz() {
+  const { title, icon, index, questions, answer, numQuestions, dispatch } =
+    useQuiz();
+  const question = questions.at(index);
+
   return (
-    <StyledAccessibility>
+    <StyledQuiz>
       <Header>
-        <Title />
+        <Title title={title} icon={icon} />
         <ThemeToggle />
       </Header>
 
       <Main>
         <QuestionContainer>
-          <Question />
-          <Progress />
+          <Question
+            index={index}
+            question={question}
+            numQuestions={numQuestions}
+          />
+          <Progress index={index} numQuestions={numQuestions} answer={answer} />
         </QuestionContainer>
-        <AnswersContainer />
+        <AnswersContainer
+          index={index}
+          question={question}
+          answer={answer}
+          dispatch={dispatch}
+          numQuestions={numQuestions}
+        />
       </Main>
-    </StyledAccessibility>
+    </StyledQuiz>
   );
 }
 
-export default Accessibility;
+export default Quiz;
