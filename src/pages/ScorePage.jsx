@@ -1,7 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useQuiz } from "../contexts/QuizContext";
 import styled from "styled-components";
 import ThemeToggle from "../components/ThemeToggle";
-import a11yIcon from "../assets/icon-accessibility.svg";
+import Loader from "../components/Loader";
 
 const StyledScorePage = styled.div`
   display: flex;
@@ -46,7 +48,7 @@ const IconContainer = styled.div`
   width: var(--space-xl);
   height: var(--space-xl);
   border-radius: 0.375rem;
-  background-color: var(--icon-bg-purple);
+  background-color: ${({ $bgColor }) => $bgColor || "var(--icon-bg-purple)"};
 
   @media (min-width: 37.5rem) {
     width: 3.5rem;
@@ -215,16 +217,90 @@ const ScoreDescription = styled.p`
   }
 `;
 
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+  min-height: 51vh;
+`;
+
+const LoadingMessage = styled.p`
+  font-style: italic;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  color: var(--text-desc);
+`;
+
+const StartQuizButton = styled(NavLink)`
+  background-color: var(--accent-purple);
+  border: transparent;
+  padding: 1.1875rem;
+  border-radius: var(--space-xs);
+  text-decoration: none;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tightest);
+  color: var(--color-white);
+
+  @media (min-width: 37.5rem) {
+    font-size: var(--fs-md);
+  }
+`;
+
+const ThemeWrap = styled.div`
+  align-self: flex-end;
+`;
+
 function ScorePage() {
+  const { title, icon, bgColor, correctAnswers, numQuestions, dispatch } =
+    useQuiz();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  if (!title || numQuestions === 0) {
+    return (
+      <StyledScorePage>
+        <ThemeWrap>
+          <ThemeToggle />
+        </ThemeWrap>
+
+        <LoadingContainer>
+          <LoadingMessage>
+            No quiz data available. Please complete a quiz first.
+          </LoadingMessage>
+
+          <StartQuizButton to="/">Start Quiz</StartQuizButton>
+        </LoadingContainer>
+      </StyledScorePage>
+    );
+  }
+
+  function handlePlayAgain(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    dispatch({ type: "restart" });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  }
+
+  if (loading) return <Loader text="Loading quiz..." />;
+
   return (
     <StyledScorePage>
       <Header>
         <TitleContainer>
-          <IconContainer>
-            <Icon src={a11yIcon} alt="a11y" />
+          <IconContainer $bgColor={bgColor}>
+            <Icon src={icon} alt={title} />
           </IconContainer>
 
-          <Title>Accessibility</Title>
+          <Title>{title}</Title>
         </TitleContainer>
 
         <ThemeToggle />
@@ -240,20 +316,20 @@ function ScorePage() {
         <ResultContainer>
           <ResultContent>
             <TitleContainer>
-              <IconContainer>
-                <Icon src={a11yIcon} alt="a11y" />
+              <IconContainer $bgColor={bgColor}>
+                <Icon src={icon} alt={title} />
               </IconContainer>
 
-              <Title>Accessibility</Title>
+              <Title>{title}</Title>
             </TitleContainer>
 
             <ScoreDetails>
-              <ScoreNumber>8</ScoreNumber>
-              <ScoreDescription>out of 10</ScoreDescription>
+              <ScoreNumber>{correctAnswers}</ScoreNumber>
+              <ScoreDescription>out of {numQuestions}</ScoreDescription>
             </ScoreDetails>
           </ResultContent>
 
-          <Button to="/">Play Again</Button>
+          <Button onClick={handlePlayAgain}>Play Again</Button>
         </ResultContainer>
       </Main>
     </StyledScorePage>

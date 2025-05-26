@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import errorIcon from "../assets/icon-error.svg";
 import correctIcon from "../assets/icon-correct.svg";
@@ -169,12 +169,36 @@ const ErrorText = styled.p`
   }
 `;
 
-function AnswersContainer({ index, question, dispatch, answer, numQuestions }) {
+function AnswersContainer({
+  index,
+  question,
+  dispatch,
+  answer,
+  numQuestions,
+  isSubmitted,
+}) {
   const [showError, setShowError] = useState(false);
 
-  function handleShowError(e) {
-    e.preventDefault();
-    setShowError((prev) => !prev);
+  const hasAnswered = answer !== null;
+
+  function handleShowError() {
+    setShowError(true);
+  }
+
+  function handleHideError() {
+    setShowError(false);
+  }
+
+  function handleSubmit() {
+    dispatch({ type: "submitAnswer" });
+  }
+
+  useEffect(() => {
+    setShowError(false);
+  }, [index]);
+
+  if (!question || !question.options) {
+    return null;
   }
 
   return (
@@ -183,20 +207,43 @@ function AnswersContainer({ index, question, dispatch, answer, numQuestions }) {
         {question.options.map((option, index) => {
           const label = String.fromCharCode(65 + index);
 
+          const isSelected = answer === index;
+          const isCorrect = index === question.correctOption;
+          const selectedAnswerIsCorrect = answer === question.correctOption;
+
+          let iconSrc = null;
+          if (hasAnswered && isSubmitted) {
+            if (isSelected) {
+              iconSrc = selectedAnswerIsCorrect ? correctIcon : errorIcon;
+            } else if (isCorrect && !selectedAnswerIsCorrect) {
+              iconSrc = correctIcon;
+            }
+          }
+
           return (
             <li key={index}>
               <StyledLabel
-                onClick={() => dispatch({ type: "newAnswer", payload: index })}
+                onClick={() => {
+                  if (!isSubmitted) {
+                    dispatch({ type: "newAnswer", payload: index });
+                    handleHideError();
+                  }
+                }}
               >
                 <Wrapper>
-                  <RadioInput name="quiz" value={label} />
+                  <RadioInput
+                    name="quiz"
+                    value={label}
+                    checked={isSelected}
+                    readOnly
+                  />
                   <LabelContainer>
                     <AnswerLabel>{label}</AnswerLabel>
                   </LabelContainer>
                   <AnswerText>{option}</AnswerText>
                 </Wrapper>
 
-                <AnswerIcon src={correctIcon} />
+                {iconSrc && <AnswerIcon src={iconSrc} />}
               </StyledLabel>
             </li>
           );
@@ -208,6 +255,9 @@ function AnswersContainer({ index, question, dispatch, answer, numQuestions }) {
           answer={answer}
           dispatch={dispatch}
           numQuestions={numQuestions}
+          onShowError={handleShowError}
+          onSubmit={handleSubmit}
+          isSubmitted={isSubmitted}
         />
       </AnswerList>
 

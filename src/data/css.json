@@ -1,6 +1,7 @@
 {
   "title": "CSS",
   "icon": "./images/icon-css.svg",
+  "bgColor": "hsl(151, 88%, 94%)",
   "questions": [
     {
       "question": "What does CSS stand for?",

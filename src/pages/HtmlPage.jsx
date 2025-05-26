@@ -1,15 +1,19 @@
+import { useEffect } from "react";
+import { useQuiz } from "../contexts/QuizContext";
 import Quiz from "../components/Quiz";
 import htmlData from "../data/html.json";
-import { QuizProvider } from "../contexts/QuizContext";
 
 function HtmlPage() {
-  const { title, icon, questions } = htmlData;
+  const { dispatch } = useQuiz();
 
-  return (
-    <QuizProvider title={title} icon={icon} questions={questions}>
-      <Quiz />
-    </QuizProvider>
-  );
+  useEffect(() => {
+    dispatch({
+      type: "loadQuiz",
+      payload: htmlData,
+    });
+  }, [dispatch]);
+
+  return <Quiz />;
 }
 
 export default HtmlPage;

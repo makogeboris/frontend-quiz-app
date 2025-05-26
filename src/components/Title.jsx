@@ -17,7 +17,7 @@ const IconContainer = styled.div`
   width: var(--space-xl);
   height: var(--space-xl);
   border-radius: 0.375rem;
-  background-color: var(--icon-bg-purple);
+  background-color: ${({ $bgColor }) => $bgColor || "var(--icon-bg-purple)"};
 
   @media (min-width: 37.5rem) {
     width: 3.5rem;
@@ -45,10 +45,10 @@ const Subject = styled.h1`
   }
 `;
 
-function Title({ title, icon }) {
+function Title({ title, icon, bgColor }) {
   return (
     <TitleContainer>
-      <IconContainer>
+      <IconContainer $bgColor={bgColor}>
         <Icon src={icon} alt={`${title} icon`} />
       </IconContainer>
 

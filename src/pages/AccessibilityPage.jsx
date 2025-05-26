@@ -1,15 +1,19 @@
+import { useEffect } from "react";
+import { useQuiz } from "../contexts/QuizContext";
 import Quiz from "../components/Quiz";
-import a11yData from "../data/accessibility.json";
-import { QuizProvider } from "../contexts/QuizContext";
+import accessibilityData from "../data/accessibility.json";
 
 function AccessibilityPage() {
-  const { title, icon, questions } = a11yData;
+  const { dispatch } = useQuiz();
 
-  return (
-    <QuizProvider title={title} icon={icon} questions={questions}>
-      <Quiz />
-    </QuizProvider>
-  );
+  useEffect(() => {
+    dispatch({
+      type: "loadQuiz",
+      payload: accessibilityData,
+    });
+  }, [dispatch]);
+
+  return <Quiz />;
 }
 
 export default AccessibilityPage;

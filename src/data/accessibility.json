@@ -1,6 +1,7 @@
 {
   "title": "Accessibility",
   "icon": "./images/icon-accessibility.svg",
+  "bgColor": "hsl(278, 100%, 95%)",
   "questions": [
     {
       "question": "What does 'WCAG' stand for?",

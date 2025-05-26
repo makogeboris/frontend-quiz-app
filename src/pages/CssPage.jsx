@@ -1,15 +1,19 @@
+import { useEffect } from "react";
+import { useQuiz } from "../contexts/QuizContext";
 import Quiz from "../components/Quiz";
 import cssData from "../data/css.json";
-import { QuizProvider } from "../contexts/QuizContext";
 
 function CssPage() {
-  const { title, icon, questions } = cssData;
+  const { dispatch } = useQuiz();
 
-  return (
-    <QuizProvider title={title} icon={icon} questions={questions}>
-      <Quiz />
-    </QuizProvider>
-  );
+  useEffect(() => {
+    dispatch({
+      type: "loadQuiz",
+      payload: cssData,
+    });
+  }, [dispatch]);
+
+  return <Quiz />;
 }
 
 export default CssPage;

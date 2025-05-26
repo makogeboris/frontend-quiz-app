@@ -1,15 +1,19 @@
+import { useEffect } from "react";
+import { useQuiz } from "../contexts/QuizContext";
 import Quiz from "../components/Quiz";
-import jsData from "../data/javascript.json";
-import { QuizProvider } from "../contexts/QuizContext";
+import javascriptData from "../data/javascript.json";
 
 function JavascriptPage() {
-  const { title, icon, questions } = jsData;
+  const { dispatch } = useQuiz();
 
-  return (
-    <QuizProvider title={title} icon={icon} questions={questions}>
-      <Quiz />
-    </QuizProvider>
-  );
+  useEffect(() => {
+    dispatch({
+      type: "loadQuiz",
+      payload: javascriptData,
+    });
+  }, [dispatch]);
+
+  return <Quiz />;
 }
 
 export default JavascriptPage;

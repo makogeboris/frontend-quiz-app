@@ -176,10 +176,6 @@ function SubjectList() {
           </SubjectItem>
         </StyledNavLink>
       </li>
-
-      <li>
-        <StyledNavLink to="/score">Scorepage</StyledNavLink>
-      </li>
     </StyledSubjectList>
   );
 }

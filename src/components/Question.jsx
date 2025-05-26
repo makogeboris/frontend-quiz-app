@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Timer from "./Timer";
 
 const QuestionTextContainer = styled.div`
   display: flex;
@@ -8,6 +9,12 @@ const QuestionTextContainer = styled.div`
   @media (min-width: 37.5rem) {
     gap: var(--space-md);
   }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const QuestionNumber = styled.p`
@@ -33,12 +40,27 @@ const QuestionText = styled.h2`
   }
 `;
 
-function Question({ index, question, numQuestions }) {
+function Question({
+  index,
+  question,
+  numQuestions,
+  dispatch,
+  secondsRemaining,
+  status,
+}) {
   return (
     <QuestionTextContainer>
-      <QuestionNumber>
-        Question {index + 1} of {numQuestions}
-      </QuestionNumber>
+      <Wrapper>
+        <QuestionNumber>
+          Question {index + 1} of {numQuestions}
+        </QuestionNumber>
+
+        <Timer
+          dispatch={dispatch}
+          secondsRemaining={secondsRemaining}
+          status={status}
+        />
+      </Wrapper>
 
       <QuestionText>{question.question}</QuestionText>
     </QuestionTextContainer>

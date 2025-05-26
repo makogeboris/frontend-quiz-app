@@ -2,51 +2,119 @@ import { createContext, useContext, useReducer } from "react";
 
 const QuizContext = createContext();
 
+const SECS_PER_QUESTION = 30;
+
 const initialState = {
   title: null,
   icon: null,
+  bgColor: null,
   questions: [],
   index: 0,
   answer: null,
   correctAnswers: 0,
+  secondsRemaining: null,
+  status: "loading",
+  isSubmitted: false,
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case "newAnswer": {
-      const question = state.questions.at(state.index);
-      const isCorrect = action.payload === question.answer;
+    case "loadQuiz":
+      return {
+        ...initialState,
+        title: action.payload.title,
+        icon: action.payload.icon,
+        bgColor: action.payload.bgColor,
+        questions: action.payload.questions,
+        secondsRemaining: action.payload.questions.length * SECS_PER_QUESTION,
+        status: "active",
+      };
 
+    case "newAnswer": {
       return {
         ...state,
         answer: action.payload,
-        correctAnswers: isCorrect
-          ? state.correctAnswers + 1
-          : state.correctAnswers,
+        isSubmitted: false,
       };
     }
 
-    case "nextQuestion":
-      return { ...state, index: state.index + 1, answer: null };
+    case "submitAnswer": {
+      return {
+        ...state,
+        isSubmitted: true,
+      };
+    }
+
+    case "nextQuestion": {
+      const question = state.questions.at(state.index);
+      const isCorrect = state.answer === question.answer;
+      const newIndex = state.index + 1;
+      const isLastQuestion = newIndex >= state.questions.length;
+
+      return {
+        ...state,
+        index: newIndex,
+        correctAnswers: isCorrect
+          ? state.correctAnswers + 1
+          : state.correctAnswers,
+        answer: null,
+        isSubmitted: false,
+        status: isLastQuestion ? "finished" : state.status,
+      };
+    }
 
     case "restart":
       return {
         ...initialState,
+        title: state.title,
+        icon: state.icon,
         questions: state.questions,
+        secondsRemaining: state.questions.length * SECS_PER_QUESTION,
+        status: "active",
       };
+
+    case "finishQuiz": {
+      return {
+        ...state,
+        status: "finished",
+      };
+    }
+
+    case "tick": {
+      const newSecondsRemaining = state.secondsRemaining - 1;
+      let newState = {
+        ...state,
+        secondsRemaining: newSecondsRemaining,
+      };
+
+      if (newSecondsRemaining <= 0) {
+        let finalCorrectAnswers = state.correctAnswers;
+
+        if (state.answer !== null && state.isSubmitted) {
+          const currentQuestion = state.questions.at(state.index);
+          const isCorrect = state.answer === currentQuestion.answer;
+          if (isCorrect) {
+            finalCorrectAnswers += 1;
+          }
+        }
+
+        newState = {
+          ...newState,
+          correctAnswers: finalCorrectAnswers,
+          status: "finished",
+        };
+      }
+
+      return newState;
+    }
 
     default:
       throw new Error("Action unknown");
   }
 }
 
-function QuizProvider({ children, title, icon, questions = [] }) {
-  const [state, dispatch] = useReducer(reducer, {
-    ...initialState,
-    title,
-    icon,
-    questions,
-  });
+function QuizProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const value = {
     ...state,

@@ -33,8 +33,7 @@ function Progress({ index, numQuestions, answer }) {
   return (
     <StyledProgress
       max={numQuestions}
-      value={1}
-      // value={index + Number(answer !== null)}
+      value={index + Number(answer !== null)}
     ></StyledProgress>
   );
 }

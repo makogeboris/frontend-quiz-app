@@ -1,6 +1,7 @@
 {
   "title": "JavaScript",
   "icon": "./images/icon-js.svg",
+  "bgColor": "hsl(225, 100%, 96%)",
   "questions": [
     {
       "question": "Which syntax is correct to output 'Hello World' in an alert box?",

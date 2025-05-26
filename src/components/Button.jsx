@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Loader from "./Loader";
 
 const StyledButton = styled.button`
   background: var(--accent-purple);
@@ -39,24 +42,57 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ index, answer, numQuestions, dispatch }) {
+function Button({
+  index,
+  answer,
+  numQuestions,
+  dispatch,
+  onShowError,
+  onSubmit,
+  isSubmitted,
+}) {
+  const navigate = useNavigate();
   const isLastQuestion = index === numQuestions - 1;
+  const [loading, setLoading] = useState(false);
 
-  function handleClick() {
-    if (answer === null) return;
+  function handleClick(e) {
+    e.preventDefault();
 
-    if (!isLastQuestion) {
-      dispatch({ type: "nextQuestion" });
+    if (answer === null) {
+      onShowError();
+      return;
+    }
+
+    if (!isSubmitted) {
+      onSubmit();
+    } else {
+      if (!isLastQuestion) {
+        dispatch({ type: "nextQuestion" });
+      } else {
+        setLoading(true);
+        dispatch({ type: "finishQuiz" });
+
+        setTimeout(() => {
+          navigate("/score");
+        }, 1000);
+      }
     }
   }
 
+  if (loading) return <Loader text="Preparing your results..." />;
+
+  let buttonText;
+  if (answer === null || !isSubmitted) {
+    buttonText = "Submit Answer";
+  } else if (isLastQuestion) {
+    buttonText = "Finish Quiz";
+  } else {
+    buttonText = "Next Question";
+  }
+
   return (
-    <StyledButton onClick={handleClick}>
-      {answer === null
-        ? "Submit Answer"
-        : isLastQuestion
-        ? "Finish Quiz"
-        : "Next Question"}
+    <StyledButton type="button" onClick={handleClick}>
+      {buttonText}
     </StyledButton>
   );
 }
