@@ -40,28 +40,34 @@ const StyledLabel = styled.label`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* gap: var(--space-sm); */
   background-color: var(--bg-sub);
   padding: var(--space-sm);
   border-radius: var(--space-xs);
   width: 100%;
-  cursor: pointer;
   border: 3px solid transparent;
   transition: 0.3s;
+  cursor: ${({ $isSubmitted }) => ($isSubmitted ? "not-allowed" : "pointer")};
 
-  &:has(input:checked) {
-    border-color: var(--accent-purple);
-  }
+  ${({ $isSelected, $isSubmitted, $isCorrect }) => {
+    if ($isSubmitted && $isSelected) {
+      if ($isCorrect) return `border-color: var(--accent-green);`;
+      else return `border-color: var(--accent-red);`;
+    }
+    if ($isSelected) return `border-color: var(--accent-purple);`;
+    return "";
+  }}
+
+  ${({ $isSubmitted }) =>
+    !$isSubmitted &&
+    `&:hover {
+      box-shadow: var(--sub-shadow);
+      border: 3px solid var(--accent-purple);
+      transform: translateX(0.5rem);
+    }`}
 
   &:has(input:focus-visible) {
     outline: 3px solid var(--accent-purple);
     outline-offset: -3px;
-  }
-
-  &:hover {
-    box-shadow: var(--sub-shadow);
-    border: 3px solid var(--accent-purple);
-    transform: translateX(0.5rem);
   }
 
   @media (min-width: 37.5rem) {
@@ -78,8 +84,8 @@ const Wrapper = styled.div`
 `;
 
 const RadioInput = styled.input.attrs({ type: "radio" })`
-  opacity: 0;
   position: absolute;
+  opacity: 0;
   width: 1px;
   height: 1px;
   margin: -1px;
@@ -88,7 +94,6 @@ const RadioInput = styled.input.attrs({ type: "radio" })`
   cursor: pointer;
 `;
 
-// const LabelContainer = styled.div
 const LabelContainer = styled.div.attrs({ className: "LabelContainer" })`
   display: flex;
   align-items: center;
@@ -99,6 +104,15 @@ const LabelContainer = styled.div.attrs({ className: "LabelContainer" })`
   background-color: var(--letter-bg);
   flex-shrink: 0;
 
+  ${({ $isSelected, $isSubmitted, $isCorrect }) => {
+    if ($isSubmitted && $isSelected) {
+      if ($isCorrect) return `background-color: var(--accent-green);`;
+      else return `background-color: var(--accent-red);`;
+    }
+    if ($isSelected) return `background-color: var(--accent-purple);`;
+    return "";
+  }}
+
   @media (min-width: 37.5rem) {
     width: 3.5rem;
     height: 3.5rem;
@@ -106,7 +120,6 @@ const LabelContainer = styled.div.attrs({ className: "LabelContainer" })`
   }
 `;
 
-// const AnswerLabel = styled.h3`
 const AnswerLabel = styled.h3.attrs({ className: "AnswerLabel" })`
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
@@ -179,8 +192,6 @@ function AnswersContainer({
 }) {
   const [showError, setShowError] = useState(false);
 
-  const hasAnswered = answer !== null;
-
   function handleShowError() {
     setShowError(true);
   }
@@ -206,38 +217,48 @@ function AnswersContainer({
       <AnswerList>
         {question.options.map((option, index) => {
           const label = String.fromCharCode(65 + index);
-
+          const id = `question-${question.id}-option-${index}`;
           const isSelected = answer === index;
-          const isCorrect = index === question.correctOption;
-          const selectedAnswerIsCorrect = answer === question.correctOption;
+          const isCorrect = index === question.answer;
 
           let iconSrc = null;
-          if (hasAnswered && isSubmitted) {
-            if (isSelected) {
-              iconSrc = selectedAnswerIsCorrect ? correctIcon : errorIcon;
-            } else if (isCorrect && !selectedAnswerIsCorrect) {
+
+          if (isSubmitted) {
+            if (isCorrect) {
               iconSrc = correctIcon;
+            } else if (isSelected && !isCorrect) {
+              iconSrc = errorIcon;
             }
           }
 
           return (
             <li key={index}>
               <StyledLabel
-                onClick={() => {
-                  if (!isSubmitted) {
-                    dispatch({ type: "newAnswer", payload: index });
-                    handleHideError();
-                  }
-                }}
+                htmlFor={id}
+                key={id}
+                $isSelected={isSelected}
+                $isSubmitted={isSubmitted}
+                $isCorrect={isCorrect}
               >
                 <Wrapper>
                   <RadioInput
+                    id={id}
                     name="quiz"
-                    value={label}
+                    value={index}
                     checked={isSelected}
-                    readOnly
+                    disabled={isSubmitted}
+                    onChange={() => {
+                      if (!isSubmitted) {
+                        dispatch({ type: "newAnswer", payload: index });
+                        handleHideError();
+                      }
+                    }}
                   />
-                  <LabelContainer>
+                  <LabelContainer
+                    $isSelected={isSelected}
+                    $isSubmitted={isSubmitted}
+                    $isCorrect={isCorrect}
+                  >
                     <AnswerLabel>{label}</AnswerLabel>
                   </LabelContainer>
                   <AnswerText>{option}</AnswerText>
@@ -263,7 +284,7 @@ function AnswersContainer({
 
       {showError && (
         <ErrorContainer>
-          <Icon src={errorIcon} />
+          <Icon src={errorIcon} alt="Error" />
           <ErrorText>Please select an answer</ErrorText>
         </ErrorContainer>
       )}

@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
   --icon-bg-green: hsl(151, 88%, 94%);
   --icon-bg-blue: hsl(225, 100%, 96%);
   --icon-bg-purple: hsl(278, 100%, 95%);
+  --letter-bg: hsl(220, 38%, 97%);
 
   /* ====================
      🌟 Accent Colors
@@ -21,11 +22,6 @@ const GlobalStyles = createGlobalStyle`
   --accent-orange: hsl(22, 100%, 60%);
   --color-white: hsl(0, 100%, 100%);
   --color-black: hsl(0, 0%, 0%);
-
-  /* =====================
-     🔤 Letter Background
-  ======================== */
-  --letter-bg: hsl(220, 38%, 97%);
 
   /* ================================
      🌞 Light Mode (default override)
@@ -97,16 +93,16 @@ const GlobalStyles = createGlobalStyle`
 
   /* font-sizes */
   --fs-title: clamp(2.5rem, 6vw, 4rem);
-  --fs-5xl: 144px;
-  --fs-4xl: 88px;
-  --fs-3xl: 64px;
-  --fs-2xl: 40px;
-  --fs-xl: 36px;
-  --fs-lg: 28px;
-  --fs-md: 24px;
-  --fs-sm: 20px;
-  --fs-xs: 18px;
-  --fs-xxs: 14px;
+  --fs-5xl: 9rem;
+  --fs-4xl: 5.5rem;
+  --fs-3xl: 4rem;
+  --fs-2xl: 2.5rem;
+  --fs-xl: 2.25rem;
+  --fs-lg: 1.75rem;
+  --fs-md: 1.5rem;
+  --fs-sm: 1.25rem;
+  --fs-xs: 1.125rem;
+  --fs-xxs: 0.875rem;
 
   /* font-weights */
   --fw-light: 300; 
@@ -119,17 +115,17 @@ const GlobalStyles = createGlobalStyle`
   --lh-normal: 1.5; 
 
   /* Spacing Scale */
-  --space-xxs: 8px;
-  --space-xs: 12px;
-  --space-sm: 16px;
-  --space-md: 24px;
-  --space-lg: 32px;
-  --space-xl: 40px;
-  --space-2xl: 48px;
-  --space-3xl: 64px;
-  --space-4xl: 128px;
-  --space-5xl: 144px;
-  --space-6xl: 184px;
+  --space-xxs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 8rem;
+  --space-5xl: 9rem;
+  --space-6xl: 11.5rem;
 
   body {
     font-family: "Rubik", sans-serif;
@@ -149,10 +145,6 @@ const GlobalStyles = createGlobalStyle`
       background-image: var(--bg-desktop);
     }
   }
-
-  label:has(input:checked) .LabelContainer {
-  background-color: var(--accent-purple);
-}
 
   label:has(input:checked) .AnswerLabel {
     color: var(--answer-label);
@@ -295,22 +287,3 @@ button {
 `;
 
 export default GlobalStyles;
-
-// --color-black: hsl(0, 0%, 0%);
-// --color-white: hsl(0, 100%, 100%);
-// --color-grey-500: hsl(219, 13%, 44%);
-// --color-grey-50: hsl(220, 38%, 97%);
-// --color-blue-950: hsl(214, 24%, 23%);
-// --color-blue-900: hsl(216, 25%, 25%);
-// --color-blue-850: hsl(215, 27%, 32%);
-// --color-blue-500: hsl(223, 100%, 59%);
-// --color-blue-300: hsl(216, 47%, 78%);
-// --color-blue-100: hsl(220, 50%, 95%);
-// --color-blue-50: hsl(225, 100%, 96%);
-// --color-green-500: hsl(151, 68%, 52%);
-// --color-green-100: hsl(151, 88%, 94%);
-// --color-purple-600: hsl(277, 91%, 56%);
-// --color-purple-100: hsl(278, 100%, 95%);
-// --color-orange-400: hsl(22, 100%, 60%);
-// --color-orange-50: hsl(27, 100%, 96%);
-// --color-red-500: hsl(0, 82%, 63%);

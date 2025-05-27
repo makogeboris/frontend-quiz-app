@@ -139,23 +139,20 @@ function Quiz() {
     }
   }, [status, navigate]);
 
-  if (loading || !questions || questions.length === 0) {
-    const loaderText =
-      status === "finished"
-        ? "Preparing your results..."
-        : "Loading questions...";
-    return <Loader text={loaderText} />;
-  }
+  const question = questions?.[index];
+  const loaderText =
+    status === "finished"
+      ? "Preparing your results..."
+      : "Loading questions...";
 
-  const question = questions.at(index);
-  if (!question)
+  if (!question && questions?.length > 0) {
     return (
       <NotFoundWrap>
         <QuestionNotFound>Question not found</QuestionNotFound>
-
         <GoHomeButton to="/">Go Home</GoHomeButton>
       </NotFoundWrap>
     );
+  }
 
   return (
     <StyledQuiz>
@@ -165,25 +162,36 @@ function Quiz() {
       </Header>
 
       <Main>
-        <QuestionContainer>
-          <Question
-            index={index}
-            question={question}
-            numQuestions={numQuestions}
-            dispatch={dispatch}
-            secondsRemaining={secondsRemaining}
-            status={status}
-          />
-          <Progress index={index} numQuestions={numQuestions} answer={answer} />
-        </QuestionContainer>
-        <AnswersContainer
-          index={index}
-          question={question}
-          answer={answer}
-          dispatch={dispatch}
-          numQuestions={numQuestions}
-          isSubmitted={isSubmitted}
-        />
+        {loading || !questions || questions.length === 0 ? (
+          <Loader text={loaderText} />
+        ) : (
+          <>
+            <QuestionContainer>
+              <Question
+                index={index}
+                question={question}
+                numQuestions={numQuestions}
+                dispatch={dispatch}
+                secondsRemaining={secondsRemaining}
+                status={status}
+              />
+              <Progress
+                index={index}
+                numQuestions={numQuestions}
+                answer={answer}
+                isSubmitted={isSubmitted}
+              />
+            </QuestionContainer>
+            <AnswersContainer
+              index={index}
+              question={question}
+              answer={answer}
+              dispatch={dispatch}
+              numQuestions={numQuestions}
+              isSubmitted={isSubmitted}
+            />
+          </>
+        )}
       </Main>
     </StyledQuiz>
   );

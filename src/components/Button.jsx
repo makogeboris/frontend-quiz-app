@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "./Loader";
 
 const StyledButton = styled.button`
-  background: var(--accent-purple);
+  background: ${({ disabled }) => (disabled ? "#cf97f2" : "#8b29c7")};
   border: 3px solid transparent;
   padding: 1.1875rem;
   box-shadow: var(--sub-shadow);
@@ -14,24 +14,19 @@ const StyledButton = styled.button`
   line-height: var(--lh-tightest);
   color: var(--color-white);
   transition: 0.3s;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 
   &:hover {
-    background: #8b29c7;
+    background: ${({ disabled }) => (disabled ? "#cf97f2" : "#8b29c7")};
+  }
+
+  &:not([disabled]):hover {
+    background: #a96dcf;
   }
 
   &:focus-visible {
     outline: 3px solid var(--accent-purple);
     outline-offset: 2px;
-
-    /* No answer seleted
-     background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.5),
-        rgba(255, 255, 255, 0.5)
-      ),
-      #a729f5;
-       or #cf97f2
-      */
   }
 
   @media (min-width: 37.5rem) {
@@ -54,12 +49,18 @@ function Button({
   const navigate = useNavigate();
   const isLastQuestion = index === numQuestions - 1;
   const [loading, setLoading] = useState(false);
+  const [disableAfterError, setDisableAfterError] = useState(false);
+
+  useEffect(() => {
+    if (answer !== null) setDisableAfterError(false);
+  }, [answer]);
 
   function handleClick(e) {
     e.preventDefault();
 
     if (answer === null) {
       onShowError();
+      setDisableAfterError(true);
       return;
     }
 
@@ -91,7 +92,11 @@ function Button({
   }
 
   return (
-    <StyledButton type="button" onClick={handleClick}>
+    <StyledButton
+      type="button"
+      onClick={handleClick}
+      disabled={disableAfterError}
+    >
       {buttonText}
     </StyledButton>
   );

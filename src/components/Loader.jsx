@@ -10,7 +10,8 @@ const LoaderWrap = styled.div`
   display: grid;
   place-content: center;
   gap: 1rem;
-  min-height: 100vh;
+  width: 100%;
+  margin-top: 5rem;
 `;
 
 const StyledLoader = styled.div`
@@ -18,9 +19,9 @@ const StyledLoader = styled.div`
   width: 4rem;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(farthest-side, var(--accent-blue) 94%, #0000)
+  background: radial-gradient(farthest-side, var(--accent-purple) 94%, #0000)
       top/10px 10px no-repeat,
-    conic-gradient(#0000 30%, var(--accent-blue));
+    conic-gradient(#0000 30%, var(--accent-purple));
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
   animation: ${rotate} 1.5s infinite linear;
 `;

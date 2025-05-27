@@ -290,31 +290,13 @@ function ScorePage() {
     }, 1000);
   }
 
-  if (loading) return <Loader text="Loading quiz..." />;
-
   return (
     <StyledScorePage>
-      <Header>
-        <TitleContainer>
-          <IconContainer $bgColor={bgColor}>
-            <Icon src={icon} alt={title} />
-          </IconContainer>
-
-          <Title>{title}</Title>
-        </TitleContainer>
-
-        <ThemeToggle />
-      </Header>
-
-      <Main>
-        <ScoreContainer>
-          <QuizStatus>
-            Quiz completed <QuizText>You scored...</QuizText>
-          </QuizStatus>
-        </ScoreContainer>
-
-        <ResultContainer>
-          <ResultContent>
+      {loading ? (
+        <Loader text="Loading quiz..." />
+      ) : (
+        <>
+          <Header>
             <TitleContainer>
               <IconContainer $bgColor={bgColor}>
                 <Icon src={icon} alt={title} />
@@ -323,15 +305,36 @@ function ScorePage() {
               <Title>{title}</Title>
             </TitleContainer>
 
-            <ScoreDetails>
-              <ScoreNumber>{correctAnswers}</ScoreNumber>
-              <ScoreDescription>out of {numQuestions}</ScoreDescription>
-            </ScoreDetails>
-          </ResultContent>
+            <ThemeToggle />
+          </Header>
 
-          <Button onClick={handlePlayAgain}>Play Again</Button>
-        </ResultContainer>
-      </Main>
+          <Main>
+            <ScoreContainer>
+              <QuizStatus>
+                Quiz completed <QuizText>You scored...</QuizText>
+              </QuizStatus>
+            </ScoreContainer>
+            <ResultContainer>
+              <ResultContent>
+                <TitleContainer>
+                  <IconContainer $bgColor={bgColor}>
+                    <Icon src={icon} alt={title} />
+                  </IconContainer>
+
+                  <Title>{title}</Title>
+                </TitleContainer>
+
+                <ScoreDetails>
+                  <ScoreNumber>{correctAnswers}</ScoreNumber>
+                  <ScoreDescription>out of {numQuestions}</ScoreDescription>
+                </ScoreDetails>
+              </ResultContent>
+
+              <Button onClick={handlePlayAgain}>Play Again</Button>
+            </ResultContainer>
+          </Main>
+        </>
+      )}
     </StyledScorePage>
   );
 }

@@ -29,11 +29,11 @@ const StyledProgress = styled.progress`
   }
 `;
 
-function Progress({ index, numQuestions, answer }) {
+function Progress({ index, numQuestions, answer, isSubmitted }) {
   return (
     <StyledProgress
       max={numQuestions}
-      value={index + Number(answer !== null)}
+      value={index + (isSubmitted && answer !== null ? 1 : 0)}
     ></StyledProgress>
   );
 }
