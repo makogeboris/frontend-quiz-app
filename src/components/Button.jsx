@@ -13,7 +13,7 @@ const StyledButton = styled.button`
   font-weight: var(--fw-medium);
   line-height: var(--lh-tightest);
   color: var(--color-white);
-  transition: 0.3s;
+  transition: all ease 0.3s;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 
   &:hover {

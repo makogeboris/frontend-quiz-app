@@ -168,10 +168,10 @@ const Button = styled(NavLink)`
   text-align: center;
   text-decoration: none;
   color: var(--color-white);
-  transition: 0.3s;
+  transition: all ease 0.3s;
 
   &:hover {
-    opacity: 0.8;
+    background: #a96dcf;
   }
 
   &:focus-visible {
@@ -245,6 +245,16 @@ const StartQuizButton = styled(NavLink)`
   font-weight: var(--fw-medium);
   line-height: var(--lh-tightest);
   color: var(--color-white);
+  transition: all ease 0.3s;
+
+  &:hover {
+    background: #a96dcf;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-purple);
+    outline-offset: 2px;
+  }
 
   @media (min-width: 37.5rem) {
     font-size: var(--fs-md);

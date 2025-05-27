@@ -99,6 +99,16 @@ const GoHomeButton = styled(NavLink)`
   color: var(--color-white);
   width: fit-content;
   justify-self: center;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background: #a96dcf;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--accent-purple);
+    outline-offset: 2px;
+  }
 
   @media (min-width: 37.5rem) {
     font-size: var(--fs-md);

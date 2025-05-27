@@ -71,7 +71,7 @@ const StyledNavLink = styled(NavLink)`
   border: 3px solid transparent;
   width: 100%;
   display: block;
-  transition: 0.3s;
+  transition: all ease 0.3s;
 
   &:hover {
     box-shadow: var(--sub-shadow);
