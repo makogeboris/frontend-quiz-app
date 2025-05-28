@@ -66,6 +66,13 @@ function reducer(state, action) {
       };
     }
 
+    case "finishQuiz": {
+      return {
+        ...state,
+        status: "finished",
+      };
+    }
+
     case "restart":
       return {
         ...initialState,
@@ -75,13 +82,6 @@ function reducer(state, action) {
         secondsRemaining: state.questions.length * SECS_PER_QUESTION,
         status: "active",
       };
-
-    case "finishQuiz": {
-      return {
-        ...state,
-        status: "finished",
-      };
-    }
 
     case "tick": {
       const newSecondsRemaining = state.secondsRemaining - 1;

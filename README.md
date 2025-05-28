@@ -44,6 +44,9 @@ Users should be able to:
 
 ### What I learned
 
+- Learned how to manage complex state with `useReducer`.
+- Practiced using the Context API to share global state across components.
+
 ## Author
 
 - Frontend Mentor - [makogeboris](https://www.frontendmentor.io/profile/makogeboris)
