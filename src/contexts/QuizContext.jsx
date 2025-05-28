@@ -39,24 +39,27 @@ function reducer(state, action) {
     }
 
     case "submitAnswer": {
+      if (state.isSubmitted) return state;
+
+      const question = state.questions.at(state.index);
+      const isCorrect = state.answer === question.answer;
+
       return {
         ...state,
         isSubmitted: true,
+        correctAnswers: isCorrect
+          ? state.correctAnswers + 1
+          : state.correctAnswers,
       };
     }
 
     case "nextQuestion": {
-      const question = state.questions.at(state.index);
-      const isCorrect = state.answer === question.answer;
       const newIndex = state.index + 1;
       const isLastQuestion = newIndex >= state.questions.length;
 
       return {
         ...state,
         index: newIndex,
-        correctAnswers: isCorrect
-          ? state.correctAnswers + 1
-          : state.correctAnswers,
         answer: null,
         isSubmitted: false,
         status: isLastQuestion ? "finished" : state.status,
